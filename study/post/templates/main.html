@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Post List</title>
+</head>
+<body>
+    <h1>목록</h1>
+    <ul>
+        {% for post in posts %}
+        <li><a href="{% url 'show' post.id %}">{{ post.title }}</a></li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'write' %}">글 작성</a>
+</body>
+</html>
