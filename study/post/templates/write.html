@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Post</title>
+</head>
+<body>
+    <h1>글 작성</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">저장</button>
+    </form>
+    <a href="{% url 'post:list' %}"><button>목록</button></a>
+</body>
+</html>

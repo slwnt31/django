@@ -14,7 +14,7 @@ def write(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.save()
-            return redirect('list')
+            return redirect('post:list')
     else:
         form=PostForm()
         return render(request,'write.html', {'form':form})

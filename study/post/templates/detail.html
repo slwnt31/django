@@ -8,9 +8,10 @@
 <body>
     <h1>{{ post.title }}</h1>
     <p>{{ post.content }}</p>
-    {% if post.photo %}
+    {% comment %} {% if post.photo %}
         {{ post.photo.url}}
         <img src = "{{ post.photo.url }}" alt="" height="200">
-    {% endif %}
+    {% endif %} {% endcomment %}
+    <a href="{% url 'post:list' %}"><button>목록</button></a>
 </body>
 </html>
