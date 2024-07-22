@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ post.title }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-    <h1>{{ post.title }}</h1>
-    <p>{{ post.content }}</p>
+    <p id='title'>제목 : </p>
+    <p class="form">{{ post.title }}</p>
+    <p>날짜 : {{post.created_at}}</p>
+    <p>내용 : {{ post.content }}</p>
     {% comment %} {% if post.photo %}
         {{ post.photo.url}}
         <img src = "{{ post.photo.url }}" alt="" height="200">
