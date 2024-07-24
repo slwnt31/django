@@ -11,7 +11,6 @@ def signup(request):
     
         if request.POST['password1'] == request.POST['password2']:
         # 사용자가 입력한 비밀번호와 비밀번호 확인 값이 일치한다면?
-        
             user = User.objects.create_user(
             # 새로운 유저 객체를 생성한다.
                 username = request.POST['username'],
@@ -23,7 +22,7 @@ def signup(request):
             auth.login(request, user)
             # user 객체로 로그인함.
             
-            return redirect('/')
+            return redirect('post:list')
             # 회원가입이 성공적으로 처리되었다면, '/'(홈)페이지로 이동.
             
         return render(request, 'signup.html')
@@ -51,7 +50,7 @@ def login(request):
             auth.login(request, user)
             # 확인에 성공했다면 auth.login() 함수를 사용해 사용자를 로그인시킨다.
             
-            return redirect('home')
+            return redirect('post:list')
         else:
             return render(request, 'login.html', {'error':'username or password is incorrect.'})
             # 확인에 실패했다면 오류 메시지와 함께 로그인 페이지를 다시 렌더링한다.
@@ -61,7 +60,7 @@ def login(request):
     
 def logout(request):
     auth.logout(request)
-    return redirect('home')
+    return redirect('users:home')
 
 def home(request):
     return render(request, 'home.html')

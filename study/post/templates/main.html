@@ -7,8 +7,10 @@
     <h1>목록</h1>
     <ul>
         {% for post in posts %}
-        <li><a href="{% url 'post:show' post.id %}">{{ post.title }}</a></li>
+        <li><a href="{% url 'post:show' post.id %}">{{ post.title }}</a>
+            &nbsp;&nbsp;&nbsp;&nbsp;{{post.writer}}</li>
         {% endfor %}
+        
     </ul>
     <a href="{% url 'post:write' %}">글 작성</a>
 </body>
