@@ -16,7 +16,8 @@ def signup(request):
             # 새로운 유저 객체를 생성한다.
                 username = request.POST['username'],
                 password = request.POST['password1'],
-                email = request.POST['email'])
+                email = request.POST['email'],
+                )
             # 유저 이름과 비밀번호, 이메일 필드를 입력받은 유저 객체!
             
             auth.login(request, user)
