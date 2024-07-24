@@ -24,3 +24,23 @@ def signup(request):
         #회원가입이 실패한 경우, 다시 회원가입 페이지를 보여줍니다.
         return render(request, 'signup.html')
     return render(request, 'signup.html')
+
+def login(request):
+    if request.method=='POST':
+        username=request.POST['username']
+        password=request.POST['password']
+        user=authenticate(request, username=username, password=password)
+        if user is not None:
+            auth.login(request, user)
+            return redirect('main.html')
+        else:
+            return render(request, 'login.html', {'error': 'username or password'})
+    else:
+        return render(request, 'login.html')
+    
+def logout(request):
+    auth.logout(request)
+    return redirect('home')
+
+def home(request):
+    return render(request, 'home.html')
