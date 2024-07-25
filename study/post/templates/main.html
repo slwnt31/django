@@ -10,6 +10,7 @@
         <li><a href="{% url 'post:show' post.id %}">{{ post.title }}</a>
             &nbsp;&nbsp;&nbsp;&nbsp;{{post.writer}}</li>
         {% endfor %}
+        <!-- 반복문이 실행되면서 각 줄의 정보를 불러온다. -->
         
     </ul>
     <a href="{% url 'post:write' %}">글 작성</a>

@@ -11,3 +11,10 @@ class Post(models.Model):
     
     def __str__(self):
         return self.title
+    
+class PostImage(models.Model):
+    post = models.ForeignKey(Post, null=True, blank=True, on_delete=models.CASCADE)
+    # Post에 있는 내용물을 불러올 영역(?)
+    
+    image_file = models.ImageField(null=True, upload_to="", blank=True)
+    # 앞으로 업로드 될 사진을 담을 영역 (?)
