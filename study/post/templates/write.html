@@ -9,7 +9,7 @@
         {% csrf_token %}
         <p>제목 : {{ form.title }}</p>
         <p>내용 : {{form.content}}</p>
-        사진<input type="file" name="image" aceept="image/*">
+        사진<input type="file" name="image" aceept="image/*" multiple>
         <button type="submit">저장</button>
     </form>
     <a href="{% url 'post:list' %}"><button>목록</button></a>
