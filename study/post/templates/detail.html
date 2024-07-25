@@ -10,8 +10,14 @@
 <body>
     <p id='title'>제목 : </p>
     <p class="form">{{ post.title }}</p>
+    <p>작성자: {{post.writer}}</p>
     <p>날짜 : {{post.created_at}}</p>
     <p>내용 : {{ post.content }}</p>
+    {% if post.writer == request.user %}
+        <a href="/updateget/{{post.id}}"><button>수정하기</button></a><br>
+        <a href="/deleteget/{{post.id}}"><button>삭제하기</button></a><br>
+    {% endif %}
+
     {% comment %} {% if post.photo %}
         {{ post.photo.url}}
         <img src = "{{ post.photo.url }}" alt="" height="200">
