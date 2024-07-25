@@ -14,7 +14,8 @@
     <p>내용 : {{ post.content }}</p>
 
     {% for img in image_file %}
-    <img src="" alt="">
+        <img src="{{img.image_file.url}}" alt="Image">
+    {%endfor%}
 
     <a href="{% url 'post:list' %}"><button>목록</button></a>
 </body>

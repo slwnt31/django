@@ -39,4 +39,5 @@ def write(request):
     
 def show(request, post_id):
     post = get_object_or_404(Post, pk =post_id)
-    return render(request, 'detail.html',{'post':post})
+    image_file=PostImage.objects.filter(post=post)
+    return render(request, 'detail.html',{'post':post, 'image_file':image_file})
