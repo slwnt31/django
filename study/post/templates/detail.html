@@ -13,15 +13,18 @@
     <p>작성자: {{post.writer}}</p>
     <p>날짜 : {{post.created_at}}</p>
     <p>내용 : {{ post.content }}</p>
+    {% for image in images %}
+        <p><img src="{{image.image.url}}" alt="Image"></p>
+    {%endfor%}
     {% if post.writer == request.user %}
         <a href="/updateget/{{post.id}}"><button>수정하기</button></a><br>
         <a href="/deleteget/{{post.id}}"><button>삭제하기</button></a><br>
     {% endif %}
 
-    {% comment %} {% if post.photo %}
+    <!-- {% comment %} {% if post.photo %}
         {{ post.photo.url}}
         <img src = "{{ post.photo.url }}" alt="" height="200">
-    {% endif %} {% endcomment %}
+    {% endif %} {% endcomment %} -->
     <a href="{% url 'post:list' %}"><button>목록</button></a>
 </body>
 </html>

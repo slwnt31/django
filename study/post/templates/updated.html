@@ -17,7 +17,7 @@
         <ul>
             {% for image in images %}
                 <li>
-                    <img src="{{ image.image.url }}" alt="Image" style="max-width: 200px;">
+                    <img src="{{ postimage.image.url }}" alt="Image" style="max-width: 200px;">
                     <button type="submit" name="image_id" value="{{ image.id }}">삭제</button>
                 </li>
             {% endfor %}

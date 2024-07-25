@@ -5,10 +5,11 @@
 </head>
 <body>
     <h1>글 작성</h1>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <p>제목 : {{ form.title }}</p>
         <p>내용 : {{form.content}}</p>
+        <p>사진 : <input type="file" name="image" multiple aceept="image/*" id="id_image"></p>
         <button type="submit">저장</button>
     </form>
     <a href="{% url 'post:list' %}"><button>목록</button></a>
