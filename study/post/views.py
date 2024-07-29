@@ -43,18 +43,20 @@ def show(request, post_id):
     return render(request, 'detail.html',{'post':post, 'image_file':image_file})
 
 def edit(request, post_id):
-    post = Post.objects.get(pk=post_id)
+    post = Post.objects.get(pk=post_id) # 수정하고자 하는 그릉ㄹ 불러옴
     if request.method == "POST":
         form = PostForm(request.POST, request.FILES)
+        
         if form.is_valid():
             post = form.save(commit=False)
-            # form.save : 입력된 데이터를 db에 바로 저장함.
-            # form.save(commit=False) : 입력된 데이터를 바로 db에 저장하지 않고, 메모리에만 저장한다0.
+              # form.save : 입력된 데이터를 db에 바로 저장함.
+              # form.save(commit=False) : 입력된 데이터를 바로 db에 저장하지 않고, 메모리에만 저장한다0.
             
             post.save()
-            return redirect('/show/<int:post_id>') 
+        
+        return redirect('/show/<int:post_id>', {'post':post}) 
         # 글의 수정사항을 모두 입력하고 제출을 눌렀을 경우!!!! 수정하고 -> detail.html 로 돌아가기   
     
     else: # GET일 때 수정 html로 이동해 수정 후 제출한 다음, 위 POST일 경우의 루트를 탄다.
         form = PostForm() # 기존의 forms.py에서 형식을 가져온다.
-    return render(request, post/edit.html, {'form':form})
+        return render(request, 'edit.html', {'form':form})
