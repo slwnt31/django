@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post
+from .models import Post, Comment
 
 class PostForm(forms.ModelForm):
     #작성하려고 했을 때 새 폼을 주는 것
@@ -7,7 +7,7 @@ class PostForm(forms.ModelForm):
         model=Post
         fields=['title','content']
         
-        # widgets = {'title': forms.TextInput(attrs={'class':'form',
-        #                                            'placeholder':'제목을 입력하세요'}),
-        #            'content': forms.Textarea(attrs={'placeholder': '내용을 입력하세요'})
-        #            }
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model=Comment
+        fields=['comment']

@@ -16,15 +16,68 @@
     {% for image in images %}
         <p><img src="{{image.image.url}}" alt="Image"></p>
     {%endfor%}
+
+    <form action="{% url 'post:likes' post.pk %}" method='POST'>
+        {% csrf_token %}
+        {% if user in post.like_users.all %}
+            <input type="submit" value="좋아요 취소">
+        {% else %}
+            <input type="submit" value="좋아요">
+        {% endif %}
+        {{ post.like_users.count }} 명이 좋아합니다.
+    </form>
+    <br>
+
+
     {% if post.writer == request.user %}
         <a href="/updateget/{{post.id}}"><button>수정하기</button></a><br>
         <a href="/deleteget/{{post.id}}"><button>삭제하기</button></a><br>
     {% endif %}
 
-    <!-- {% comment %} {% if post.photo %}
-        {{ post.photo.url}}
-        <img src = "{{ post.photo.url }}" alt="" height="200">
-    {% endif %} {% endcomment %} -->
+    <br>
+
+    <hr>
+
+    <h4>댓글 목록</h4>
+    {% if comments %}
+        <p><b>{{ comments|length }}개의 댓글이 있습니다.</b></p>
+    {% endif %}
+    <ul>
+        {% for comment in comments %}
+            <li>
+                {{ comment.comment }} - 작성자: {{ comment.writer }}
+                {% if comment.writer == request.user %}
+                    <form action="{% url 'post:comments_delete' post.pk comment.pk %}" method="POST">
+                        {% csrf_token %}
+                        <input type="submit" value="댓글 삭제">
+                    </form>
+                {% endif %}
+            </li>
+        {% empty %}
+            <p>댓글이 없습니다.</p>
+        {% endfor %}
+    </ul>
+
+    <hr>
+
+    {% if request.user.is_authenticated %}
+        <form action="{% url 'post:comments_create' post.pk %}" method="POST">
+            {% csrf_token %}
+            <p>{{ commentForm }}</p>
+            <input type="submit" value="댓글 등록">
+        </form>
+    {% else %}
+    <a href="{% url 'accounts/home/login/' %}">댓글을 작성하려면 로그인하세요.</a>
+    {% endif %}
+
+    <hr>
+
+    {% comment %} <form method='POST' enctype="multipart/form-data">
+            {% csrf_token %}
+            <button>수정하기</button><br>
+            <button>삭제하기</button><br>
+        </form> {% endcomment %}
+
     <a href="{% url 'post:list' %}"><button>목록</button></a>
 </body>
 </html>
