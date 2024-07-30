@@ -12,10 +12,51 @@
     <p class="form">{{ post.title }}</p>
     <p>날짜 : {{post.created_at}}</p>
     <p>내용 : {{ post.content }}</p>
+    
 
     {% for img in image_file %}
         <img src="{{img.image_file.url}}" alt="Image">
     {%endfor%}
+    <br><br>
+
+    <h4>댓글 목록</h4>
+
+    <!--read-->
+    {% if comments %}
+        <p><b>{{ comments|length }}개의 댓글이 있습니다.</b></p>
+    {% endif %}
+    <ul>
+        
+        {% for comment in comments %}
+            <li>
+                {{ comment.user }} - {{ comment.content }}
+      
+                <!--delete-->
+                {% if user == comment.user %}
+                    <form action="{% url 'post:comments_delete' post.pk comment.pk %}" method="POST">
+                        {% csrf_token %}
+                        <input type="submit" value="댓글 삭제">
+                    </form>
+                {% endif %}
+            </li>
+        {% empty %}
+            <p>댓글이 없습니다.</p>
+        {% endfor %}
+    </ul>
+
+    <hr>
+
+    <!--create-->
+    {% if request.user.is_authenticated %}
+        <form action="{% url 'post:comments_create' post.pk %}" method="POST">
+        {% csrf_token %}
+            댓글 작성:{{ comment_form.as_p }} 
+            <!--as.p comment_form 안에 담긴 form 전체를 가져온다.-->
+            <input type="submit" value="댓글작성">
+     </form>
+    {% else %}
+        <a href="{% url 'users:login' %}">[댓글을 작성하려면 로그인하세요.]</a>
+    {% endif %}
 
     <a href="{% url 'post:list' %}"><button>목록</button></a>
 </body>

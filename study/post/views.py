@@ -1,8 +1,8 @@
 from django.shortcuts import render,redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Post
-from .models import PostImage
-from .forms import PostForm
+from django.views.decorators.http import require_POST
+from .models import Post, PostImage, Comment
+from .forms import PostForm, CommentForm
 # Create your views here.
 
 # request는 현재 상황을 의미한다.
@@ -40,4 +40,34 @@ def write(request):
 def show(request, post_id):
     post = get_object_or_404(Post, pk =post_id)
     image_file=PostImage.objects.filter(post=post)
-    return render(request, 'detail.html',{'post':post, 'image_file':image_file})
+    comments = post.comment_set.all()
+    comment_form = CommentForm()
+    context = {
+        'post':post,
+        'image_file':image_file,
+        'comments':comments,
+        'comment_form':comment_form
+    }
+    return render(request, 'detail.html', context)
+
+
+@require_POST
+def comments_create(request, pk): #post_pk 해보기
+    if request.user.is_authenticated:
+        post = get_object_or_404(Post, pk=pk)
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.post = post
+            comment.user = request.user
+            comment.save()
+        return redirect('post:show', post.pk)
+    return redirect('users:login')
+    
+@require_POST
+def comments_delete(request, post_pk, comment_pk):
+    if request.user.is_authenticated:
+        comment = get_object_or_404(Comment, pk=comment_pk)
+        if request.user == comment.user:
+            comment.delete()
+    return redirect('post:show', post_pk)

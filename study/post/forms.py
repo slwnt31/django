@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post
+from .models import Post, Comment
 
 class PostForm(forms.ModelForm):
     class Meta:
@@ -12,3 +12,11 @@ class PostForm(forms.ModelForm):
         #                                            'placeholder':'제목을 입력하세요'}),
         #            'content': forms.Textarea(attrs={'placeholder': '내용을 입력하세요'})
         #            }
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = '__all__'
+        exclude = ('post', 'user')
+    # 댓글 작성시 user필드와 article필드(ForeignKey)가 보이지 않도록 수정해야 한다.
