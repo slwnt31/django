@@ -8,20 +8,20 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-    <form method="POST">
-        {% csrf_token %}
-        <p id='title'>제목 : </p>
-        <p class="form">{{ post.title }}</p>
-        <p>날짜 : {{post.created_at}}</p>
-        <p>내용 : {{ post.content }}</p>
+    
+    
+    <p id='title'>제목 : </p>
+    <p class="form">{{ post.title }}</p>
+    <p>날짜 : {{post.created_at}}</p>
+    <p>내용 : {{ post.content }}</p>
 
-        {% for img in image_file %}
-            <img src="{{img.image_file.url}}" alt="Image">
-        {% endfor %}
+    {% for img in image_file %}
+        <img src="{{img.image_file.url}}" alt="Image">
+    {% endfor %}
 
-        <a href="{% url 'post:edit' post.id %}"><button>수정하기</button></a>
+    <a href="{% url 'post:edit' post.id %}"><button>수정하기</button></a>
 
-        <a href="{% url 'post:list' %}"><button>목록</button></a>
-    </form>
+    <a href="{% url 'post:list' %}"><button>목록</button></a>
+    
 </body>
 </html>
