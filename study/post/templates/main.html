@@ -5,6 +5,10 @@
 </head>
 <body>
     <h1>목록</h1>
+    <form action="{% url 'accounts:user_delete' %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="회원 탈퇴">
+    </form>
     <ul>
         {% for post in posts %}
         <li><a href="{% url 'post:show' post.id %}">{{ post.title }}</a>&nbsp;&nbsp;&nbsp;작성자: {{post.writer}}</p></li>

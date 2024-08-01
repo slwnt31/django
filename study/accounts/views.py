@@ -2,6 +2,7 @@ from django.contrib import auth
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
+from django.contrib.auth import logout as auth_logout
 
 # Create your views here.
 
@@ -32,7 +33,7 @@ def login(request):
         user=authenticate(request, username=username, password=password)
         if user is not None:
             auth.login(request, user)
-            return redirect('/')
+            return redirect('post:list')
         else:
             return render(request, 'login.html', {'error': 'username or password'})
     else:
@@ -40,7 +41,12 @@ def login(request):
     
 def logout(request):
     auth.logout(request)
-    return redirect('home')
+    return redirect('accounts:home')
 
 def home(request):
     return render(request, 'home.html')
+
+def user_delete(request):
+    request.user.delete()
+    auth_logout(request)
+    return redirect('accounts:home')

@@ -14,6 +14,8 @@ urlpatterns = [
     path('<int:pk>/comments/', views.comments_create, name='comments_create'),
     path('<int:pk>/comments/<int:comment_pk>/delete/', views.comments_delete, name='comments_delete'),
     path('<int:post_pk>/likes/', views.likes, name='likes'),
+    # path('search/', views.SearchFormView.as_view, name='search')
+    #데이터를 처리하기 위한 뷰이므로 FormView를 상속받아 정의
 ]
 
 urlpatterns += static(settings.MEDIA_URL,
