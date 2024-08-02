@@ -5,6 +5,7 @@ from .forms import PostForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.views.decorators.http import require_POST
+from django.db.models import Q
 # Create your views here.
 
 def list(request):
@@ -138,3 +139,33 @@ def likes(request, post_pk):
             post.like_users.add(request.user)
         return redirect('post:show', post_pk)
     return redirect('accounts/home/login')
+
+# def search(request):
+#         if request.method == 'POST':
+#                 searched = request.POST['searched']
+#                 # 검색창에 입력된 내용을 searched에 받음
+#                 post1 = Post.objects.filter(name__contains=searched)
+#                 # 그리고 그 변수가 데이터베이스에 사용자가 검색한 내용이 포함된 object에 있는지 찾아서
+#                 # 찾은 내용을 post1에 담아 searched.html 페이지에 딕셔너리 형태로 반환해줌.
+#                 context = {
+#                     'searched':searched,
+#                     'post1':post1
+#                 }
+#                 ret'searched':searchedurn render(request, 'searched.html', context)
+#         else: # POST 방식이 아닐 경우, 빈 딕셔너리를 searched.html에 반환해줌.
+#                 return render(request, 'searched.html', {})
+#             #  request.POST[''] 안에 있는 searched는 검색창을 구현했던 nav 부분에서 
+#             #  form 태그의 input 태그에 있는 name=searched의 searched를 의미합니다.
+
+
+def search(request):
+    if request.method == 'POST':
+        searched = request.POST['searched']
+        posts = Post.objects.filter(Q(title=searched) | Q(content=searched))
+        
+    context = {
+        'searched':searched,
+        'posts':posts
+    }    
+    
+    return render(request, 'search.html', context)
