@@ -161,7 +161,15 @@ def likes(request, post_pk):
 def search(request):
     if request.method == 'POST':
         searched = request.POST['searched']
-        posts = Post.objects.filter(Q(title=searched) | Q(content=searched))
+        search_word = set(searched.replace(',', ' ').split())
+        
+        q_objects = Q()
+        for word in search_word:
+            if word:  # 빈 문자열 필터링
+                q_objects |= Q(title__icontains=word) | Q(content__icontains=word)
+        
+        # 검색 수행
+        posts = Post.objects.filter(q_objects).distinct()
         
     context = {
         'searched':searched,
